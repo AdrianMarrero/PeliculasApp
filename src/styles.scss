@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+$grey: #4B4E52;
+$greyLight: #E0E0E0;
+
+*{
+  font-family: Arial;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: $greyLight;
+}

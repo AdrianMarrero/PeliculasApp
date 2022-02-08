@@ -1,1 +1,21 @@
-<p>list works!</p>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+    <div *ngFor="let movie of movies" class="mt-4">
+      <a [routerLink]="['/edit', movie.id]">
+
+        <div class="card">
+          <h4 class="card-title px-6 pt-4">{{movie.title}}</h4>
+          <img [src]="movie.poster" class="card-img-top px-6">
+          <div class="px-6 py-4">
+            <p-tag *ngFor="let genre of movie.genre" [value]="genre" class=""></p-tag>
+          </div>
+        </div>
+
+      </a>
+    </div>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+
+* {
+  text-decoration: none;
+}
+::ng-deep .card{
+  border-radius: 1rem;
+}
+::ng-deep p-tag.p-element:not(:first-child){
+  margin-left: 1rem;
+}
