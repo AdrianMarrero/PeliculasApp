@@ -10,6 +10,7 @@ import { Movie, MovieRespose } from '../../../interfaces/movie-response';
 export class ListComponent implements OnInit {
 
   movies: Movie[] = [];
+  loading: boolean = true;
 
   constructor(private peliculasService: PeliculasService) { }
 
@@ -19,6 +20,7 @@ export class ListComponent implements OnInit {
       .subscribe( movies => {
         console.log(movies);
         this.movies = movies;
+        this.loading = false;
       })
 
   }
