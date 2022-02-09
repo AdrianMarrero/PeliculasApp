@@ -1,1 +1,33 @@
-<p>edit-movie works!</p>
+
+<div class="container-fluid">
+
+    <app-loading *ngIf="loading"></app-loading>
+    <h4 class="text-danger">{{errorService}}</h4>
+    <div class="row">
+      <div class="col-12 text-center">
+        <img [src]="movie.poster">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 ml-5">
+        <span>Puntuación: {{movie.imdbRating}}</span>
+        <star-rating
+          [value]="movie.imdbRating"
+          [totalstars]="10"
+          checkedcolor="yellow"
+          uncheckedcolor="black"
+          size="14px"
+          [readonly]="true">
+        </star-rating>
+      </div>
+      <div class="col-1">
+        <span>Duración: {{movie.duration}}</span>
+      </div>
+    </div>
+    <div class="col-12">
+      <h5>Title</h5>
+      <input type="text" pInputText [(ngModel)]="movie.title">
+    </div>
+
+
+</div>

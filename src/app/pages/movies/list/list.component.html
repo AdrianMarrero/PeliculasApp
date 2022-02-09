@@ -2,6 +2,7 @@
 <div class="row">
   <div class="col">
     <app-loading *ngIf="loading"></app-loading>
+    <h4 class="text-danger">{{errorService}}</h4>
     <div *ngFor="let movie of movies" class="mt-4">
       <a [routerLink]="['/edit', movie.id]">
         <app-card-movie [movie]=movie></app-card-movie>
@@ -9,4 +10,3 @@
     </div>
   </div>
 </div>
-

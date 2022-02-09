@@ -11,17 +11,27 @@ export class ListComponent implements OnInit {
 
   movies: Movie[] = [];
   loading: boolean = true;
+  errorService: string = '';
+
 
   constructor(private peliculasService: PeliculasService) { }
 
   ngOnInit(): void {
 
     this.peliculasService.getMovies()
-      .subscribe( movies => {
-        console.log(movies);
-        this.movies = movies;
-        this.loading = false;
-      })
+      .subscribe(
+        movies => {
+          console.log(movies);
+          this.movies = movies;
+          this.loading = false;
+          this.errorService = '';
+        },
+        err => {
+          this.errorService = err.message;
+          this.loading = false;
+        }
+      );
+
 
   }
 

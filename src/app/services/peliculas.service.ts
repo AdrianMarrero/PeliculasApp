@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MovieRespose, Movie } from '../interfaces/movie-response';
+import { MovieRespose, Movie, Actor, Company } from '../interfaces/movie-response';
+
+const url = `http://localhost:3000`;
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +13,18 @@ export class PeliculasService {
   constructor(private http: HttpClient) { }
 
   getMovies():Observable<Movie[]>{
-    return this.http.get<Movie[]>('http://localhost:3000/movies');
+    return this.http.get<Movie[]>(`${url}/movies`);
   }
 
-  getActor():Observable<MovieRespose>{
-    return this.http.get<MovieRespose>('http://localhost:3000/actors');
+  getMoviesById(id: number):Observable<Movie>{
+    return this.http.get<Movie>(`${url}/movies/${id}`);
   }
 
-  getCompanies():Observable<MovieRespose>{
-    return this.http.get<MovieRespose>('http://localhost:3000/companies');
+  getActor():Observable<Actor[]>{
+    return this.http.get<Actor[]>(`${url}/actors`);
+  }
+
+  getCompanies():Observable<Company[]>{
+    return this.http.get<Company[]>(`${url}/companies`);
   }
 }
