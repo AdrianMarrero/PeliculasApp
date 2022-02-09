@@ -3,19 +3,22 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ListComponent } from './movies/list/list.component';
 import { EditMovieComponent } from './movies/edit-movie/edit-movie.component';
 import { AddMovieComponent } from './movies/add-movie/add-movie.component';
-
+import { PipesModule } from '../pipes/pipes.module';
+import { ComponentsModule } from '../components/components.module';
 
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
 
-import { ComponentsModule } from '../components/components.module';
 import { RatingModule } from 'ng-starrating';
+
 
 
 
@@ -26,6 +29,7 @@ import { RatingModule } from 'ng-starrating';
     AddMovieComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     CommonModule,
     RouterModule,
@@ -35,7 +39,9 @@ import { RatingModule } from 'ng-starrating';
     ProgressSpinnerModule,
     TagModule,
     InputTextModule,
-    RatingModule
+    MultiSelectModule,
+    RatingModule,
+    PipesModule
   ]
 })
 export class PagesModule { }

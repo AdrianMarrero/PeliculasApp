@@ -20,7 +20,7 @@ export class PeliculasService {
     return this.http.get<Movie>(`${url}/movies/${id}`);
   }
 
-  getActor():Observable<Actor[]>{
+  getActors():Observable<Actor[]>{
     return this.http.get<Actor[]>(`${url}/actors`);
   }
 

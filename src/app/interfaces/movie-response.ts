@@ -14,6 +14,7 @@ export interface Actor {
   img:        null | string;
   rating:     number;
   movies:     number[];
+  nombre_completo?: string;
 }
 
 export enum Gender {

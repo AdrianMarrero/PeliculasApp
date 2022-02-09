@@ -9,8 +9,13 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-6 ml-5">
-        <span>Puntuación: {{movie.imdbRating}}</span>
+      <div class="col-6 ml-3">
+        <span><b>Puntuación:</b> {{movie.imdbRating}}</span>
+      </div>
+      <div class="col-5 text-right">
+        <b>Duración:</b>
+      </div>
+      <div class="col-6 ml-3">
         <star-rating
           [value]="movie.imdbRating"
           [totalstars]="10"
@@ -20,13 +25,20 @@
           [readonly]="true">
         </star-rating>
       </div>
-      <div class="col-1">
-        <span>Duración: {{movie.duration}}</span>
+      <div class="col-5 text-right">
+        <span>{{movie.duration | timeFormat}}</span>
       </div>
     </div>
     <div class="col-12">
       <h5>Title</h5>
       <input type="text" pInputText [(ngModel)]="movie.title">
+    </div>
+    <div class="col-12">
+      <h5>Actores</h5>
+      <p-multiSelect [options]="actors" [(ngModel)]="selectedActors" optionLabel="nombre_completo"></p-multiSelect>
+      <div *ngFor="let actor of selectedActors">
+        <span class="text-muted">{{actor.nombre_completo}}</span>
+      </div>
     </div>
 
 
