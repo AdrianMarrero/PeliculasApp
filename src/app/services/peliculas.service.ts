@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, pipe } from 'rxjs';
+import { Observable, pipe, EMPTY } from 'rxjs';
 import { MovieRespose, Movie, Actor, Company } from '../interfaces/movie-response';
 
-const url = `http://localhost:3000`;
+const url = `http://localhost:4000`;
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,10 @@ export class PeliculasService {
   }
 
   updateCompaniesById(company: Company):Observable<Movie>{
-    return this.http.put<any>(`${url}/companies/${company.id}`, company);
+    if(company.id !== -1){
+      return this.http.put<any>(`${url}/companies/${company.id}`, company);
+    }
+    return EMPTY;
   }
 
 }

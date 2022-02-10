@@ -28,9 +28,9 @@ export class EditMovieComponent implements OnInit {
   newGenre: string = '';
 
   constructor(private peliculasService: PeliculasService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private confirmationService: ConfirmationService) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private confirmationService: ConfirmationService) {
 
     this.idMovie = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -44,7 +44,7 @@ export class EditMovieComponent implements OnInit {
       this.peliculasService.getActors(),
       this.peliculasService.getCompanies()
 
-    ]).subscribe( ([movie, actors, companies]) => {
+    ]).subscribe(([movie, actors, companies]) => {
 
       this.movie = movie;
       this.actors = actors;
@@ -58,16 +58,16 @@ export class EditMovieComponent implements OnInit {
       this.errorService = '';
 
     },
-    err => {
-      this.errorService = err.message;
-      this.loading = false;
-    });
+      err => {
+        this.errorService = err.message;
+        this.loading = false;
+      });
 
 
 
   }
 
-  concatActorName(){
+  concatActorName() {
     this.actors.map(option => {
       const newPropsObj = {
         nombre_completo: option.first_name + ' ' + option.last_name
@@ -76,18 +76,18 @@ export class EditMovieComponent implements OnInit {
     });
   }
 
-  fillSelectedActor(actors: number[]){
+  fillSelectedActor(actors: number[]) {
     for (const iterator of this.actors) {
       for (const iterator2 of actors) {
-       if(iterator.id === iterator2){
-         this.selectedActors.push(iterator);
+        if (iterator.id === iterator2) {
+          this.selectedActors.push(iterator);
 
-       }
+        }
       }
     }
   }
 
-  fillSelectedCompanies(movieId: number, companies: Company[]){
+  fillSelectedCompanies(movieId: number, companies: Company[]) {
     const companyFake = {
       "id": -1,
       "name": "No company",
@@ -96,70 +96,79 @@ export class EditMovieComponent implements OnInit {
       "employees": 0,
       "rating": 0,
       "movies": []
-      }
+    }
     companies.push(companyFake);
     for (const key in companies) {
-      if(companies[key].movies.includes(movieId)){
+      if (companies[key].movies.includes(movieId)) {
         this.selectedCompany = companies[key];
         break;
-      }else{
+      } else {
         this.selectedCompany = companies[companies.length - 1];
       }
     }
     this.selectedCompanyOld = this.selectedCompany;
   }
 
-  fillForm(movie: Movie){
+  fillForm(movie: Movie) {
     this.title = movie.title;
   }
 
-  edit(){
+  edit() {
 
     this.movie.actors = this.selectedActors.map(actor => actor.id);
-    if(this.newGenre !== ''){
+    if (this.newGenre !== '') {
       this.movie.genre.push(this.newGenre);
     }
 
-    this.updateCompany();
+    this.updateCompany().then( () => {
+      this.peliculasService.updateMoviesById(this.movie)
+        .subscribe( movie => {
+          console.log(movie);
+        })
+    });
 
 
     console.log(this.movie);
   }
 
-  delete(){
+  delete() {
     this.confirmationService.confirm({
-      message: '¿Estás seguro que quiere eliminar '+ `${this.movie.title}`+ '?',
+      message: '¿Estás seguro que quiere eliminar ' + `${this.movie.title}` + '?',
       accept: () => {
-          this.peliculasService.deleteMoviesById(this.movie.id)
-            .subscribe( resp => {
-              this.router.navigate(['/home']);
+        this.peliculasService.deleteMoviesById(this.movie.id)
+          .subscribe(() => {
+            this.router.navigate(['/home']);
           });
       }
     });
   }
 
-  updateCompany(){
+  updateCompany() {
     console.log(this.selectedCompany);
-    this.removeItemFromArr(this.selectedCompanyOld.movies, this.movie.id);
-    if(this.selectedCompanyOld.id !== -1){
-      this.peliculasService.updateCompaniesById(this.selectedCompanyOld)
-        .subscribe( company => {
-          console.log(company);
+    let promise = new Promise<void>((resolve, reject) => {
+      this.removeItemFromArr(this.selectedCompanyOld.movies, this.movie.id);
+      this.selectedCompany.movies.push(this.movie.id);
 
+      this.peliculasService.updateCompaniesById(this.selectedCompanyOld).toPromise().then(() => {
+        this.peliculasService.updateCompaniesById(this.selectedCompany).toPromise().then(() => {
+        }).catch(err => {
+          console.log(err + 'update company');
+          reject();
         });
-    }
-    this.selectedCompany.movies.push(this.movie.id);
-    this.peliculasService.updateCompaniesById(this.selectedCompany)
-    .subscribe( company => {
-      console.log(company);
-      this.router.navigate(['/home'])
-    })
 
+      }).catch(err => {
+        console.log(err + 'delete company');
+        reject();
+      });
+      resolve();
+    });
+
+    return promise;
 
   }
 
-  removeItemFromArr( arr:any, item:number ){
-    var i = arr.indexOf( item );
-    i !== -1 && arr.splice( i, 1 );
+  removeItemFromArr(arr: any, item: number) {
+    var i = arr.indexOf(item);
+    i !== -1 && arr.splice(i, 1);
   };
 }
