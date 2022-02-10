@@ -1,4 +1,21 @@
-input, ::ng-deep .p-multiselect{
+input, ::ng-deep .p-multiselect, ::ng-deep .p-dropdown{
   width: 100%;
 }
 
+@mixin btnWithHeight {
+  width: 3.357rem;
+  height: 3.357rem!important;
+}
+
+.editFloatBtn{
+  @include btnWithHeight();
+  position: fixed;
+  bottom: 20px;
+  right: 90px;
+}
+.trashFloatBtn{
+  @include btnWithHeight();
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}

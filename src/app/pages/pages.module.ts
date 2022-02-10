@@ -16,8 +16,13 @@ import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 import { RatingModule } from 'ng-starrating';
+
 
 
 
@@ -40,8 +45,14 @@ import { RatingModule } from 'ng-starrating';
     TagModule,
     InputTextModule,
     MultiSelectModule,
+    DropdownModule,
     RatingModule,
+    ButtonModule,
+    ConfirmDialogModule,
     PipesModule
-  ]
+  ],
+  providers: [
+    ConfirmationService
+  ],
 })
 export class PagesModule { }

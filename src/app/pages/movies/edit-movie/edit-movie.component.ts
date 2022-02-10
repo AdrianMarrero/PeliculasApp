@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
+import { ConfirmationService } from 'primeng/api';
 import { Movie } from 'src/app/interfaces/movie-response';
 import { PeliculasService } from 'src/app/services/peliculas.service';
-import { Actor } from '../../../interfaces/movie-response';
+import { Actor, Company } from '../../../interfaces/movie-response';
 
 @Component({
   selector: 'app-edit-movie',
@@ -15,6 +16,8 @@ export class EditMovieComponent implements OnInit {
   movie!: Movie;
   actors!: Actor[];
   selectedActors: Actor[] = [];
+  companies: Company[] = [];
+  selectedCompany!: Company;
   loading: boolean = true;
   errorService: string = '';
   idMovie!: number;
@@ -22,7 +25,9 @@ export class EditMovieComponent implements OnInit {
   title!: string;
 
   constructor(private peliculasService: PeliculasService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router,
+              private confirmationService: ConfirmationService) {
 
     this.idMovie = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -33,57 +38,29 @@ export class EditMovieComponent implements OnInit {
 
     combineLatest([
       this.peliculasService.getMoviesById(this.idMovie),
-      this.peliculasService.getActors()
-    ]).subscribe( ([movie, actors]) => {
+      this.peliculasService.getActors(),
+      this.peliculasService.getCompanies()
+
+    ]).subscribe( ([movie, actors, companies]) => {
 
       this.movie = movie;
       this.actors = actors;
+      this.companies = companies;
       this.fillForm(this.movie);
       this.concatActorName();
       this.fillSelectedActor(this.movie.actors);
+      this.fillSelectedCompanies(this.movie.id, companies);
+
       this.loading = false;
       this.errorService = '';
 
+    },
+    err => {
+      this.errorService = err.message;
+      this.loading = false;
     });
 
 
-
-  }
-
-
-  getMoviesById(idMovie: number){
-    this.peliculasService.getMoviesById(idMovie)
-    .subscribe(
-      movie => {
-        console.log(movie);
-        this.movie = movie;
-        this.fillForm(this.movie);
-        this.loading = false;
-        this.errorService = '';
-      },
-      err => {
-        this.errorService = err.message;
-        this.loading = false;
-      }
-    );
-  }
-
-  getActors(){
-    this.peliculasService.getActors()
-      .subscribe(
-        actor => {
-          console.log(actor);
-          this.actors = actor;
-          this.concatActorName();
-          this.fillSelectedActor(this.movie.actors);
-          this.loading = false;
-          this.errorService = '';
-      },
-      err => {
-        this.errorService = err.message;
-        this.loading = false;
-      }
-    ) ;
 
   }
 
@@ -102,15 +79,37 @@ export class EditMovieComponent implements OnInit {
        if(iterator.id === iterator2){
          this.selectedActors.push(iterator);
        }
+      }
     }
   }
 
-
+  fillSelectedCompanies(movieId: number, companies: Company[]){
+    for (const key in companies) {
+      if(companies[key].movies.includes(movieId)){
+        this.selectedCompany = companies[key];
+        break;
+      }
+    }
   }
 
   fillForm(movie: Movie){
     this.title = movie.title;
   }
 
+  edit(){
+
+  }
+
+  delete(){
+    this.confirmationService.confirm({
+      message: '¿Estás seguro que quiere eliminar '+ `${this.movie.title}`+ '?',
+      accept: () => {
+          this.peliculasService.deleteMoviesById(this.movie.id)
+            .subscribe( resp => {
+              this.router.navigate(['/home']);
+          });
+      }
+  });
+  }
 
 }

@@ -3,43 +3,63 @@
 
     <app-loading *ngIf="loading"></app-loading>
     <h4 class="text-danger">{{errorService}}</h4>
-    <div class="row">
-      <div class="col-12 text-center">
-        <img [src]="movie.poster">
+    <div *ngIf="movie">
+      <div class="row" >
+        <div class="col-12 text-center">
+          <img src="{{movie.poster}}">
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-6 ml-3">
-        <span><b>Puntuación:</b> {{movie.imdbRating}}</span>
+      <div class="row">
+        <div class="col-6 ml-3">
+          <span><b>Puntuación:</b> {{movie.imdbRating}}</span>
+        </div>
+        <div class="col-5 text-right">
+          <b>Duración:</b>
+        </div>
+        <div class="col-6 ml-3">
+          <star-rating
+            [value]="movie.imdbRating"
+            [totalstars]="10"
+            checkedcolor="yellow"
+            uncheckedcolor="black"
+            size="14px"
+            [readonly]="true">
+          </star-rating>
+        </div>
+        <div class="col-5 text-right">
+          <span>{{movie.duration | timeFormat}}</span>
+        </div>
       </div>
-      <div class="col-5 text-right">
-        <b>Duración:</b>
+      <div class="col-12">
+        <h5>Title</h5>
+        <input type="text" pInputText [(ngModel)]="movie.title">
+        <p class="text-muted mt-2">{{movie.title}}</p>
+        <hr/>
       </div>
-      <div class="col-6 ml-3">
-        <star-rating
-          [value]="movie.imdbRating"
-          [totalstars]="10"
-          checkedcolor="yellow"
-          uncheckedcolor="black"
-          size="14px"
-          [readonly]="true">
-        </star-rating>
+      <div class="col-12">
+        <h5>Actores</h5>
+        <p-multiSelect [options]="actors" [(ngModel)]="selectedActors" optionLabel="nombre_completo"></p-multiSelect>
+        <div class="mt-2" *ngFor="let actor of selectedActors">
+          <p class="text-muted">{{actor.nombre_completo}}</p>
+        </div>
+        <hr/>
       </div>
-      <div class="col-5 text-right">
-        <span>{{movie.duration | timeFormat}}</span>
+      <div class="col-12">
+        <h5>Estudio</h5>
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name"></p-dropdown>
+        <p class="text-muted mt-2">{{selectedCompany.name}}</p>
+        <hr/>
       </div>
-    </div>
-    <div class="col-12">
-      <h5>Title</h5>
-      <input type="text" pInputText [(ngModel)]="movie.title">
-    </div>
-    <div class="col-12">
-      <h5>Actores</h5>
-      <p-multiSelect [options]="actors" [(ngModel)]="selectedActors" optionLabel="nombre_completo"></p-multiSelect>
-      <div *ngFor="let actor of selectedActors">
-        <span class="text-muted">{{actor.nombre_completo}}</span>
+      <div class="col-12 pb-6">
+        <h5>Géneros</h5>
+        <input type="text" pInputText [(ngModel)]="movie.genre">
+        <div class="mt-2">
+          <p-tag *ngFor="let genre of movie.genre" [value]="genre" class=""></p-tag>
+        </div>
       </div>
     </div>
 
-
+    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success editFloatBtn" (click)="edit()"></button>
+    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger trashFloatBtn" (click)="delete()"></button>
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 </div>

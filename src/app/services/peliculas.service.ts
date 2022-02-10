@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
 import { MovieRespose, Movie, Actor, Company } from '../interfaces/movie-response';
 
 const url = `http://localhost:3000`;
@@ -20,6 +20,10 @@ export class PeliculasService {
     return this.http.get<Movie>(`${url}/movies/${id}`);
   }
 
+  deleteMoviesById(id: number):Observable<any>{
+    return this.http.delete<any>(`${url}/movies/${id}`);
+  }
+
   getActors():Observable<Actor[]>{
     return this.http.get<Actor[]>(`${url}/actors`);
   }
@@ -27,4 +31,5 @@ export class PeliculasService {
   getCompanies():Observable<Company[]>{
     return this.http.get<Company[]>(`${url}/companies`);
   }
+
 }
