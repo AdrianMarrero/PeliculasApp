@@ -24,12 +24,20 @@ export class PeliculasService {
     return this.http.delete<any>(`${url}/movies/${id}`);
   }
 
+  updateMoviesById(movie: Movie):Observable<Movie>{
+    return this.http.put<any>(`${url}/movies/${movie.id}`, movie);
+  }
+
   getActors():Observable<Actor[]>{
     return this.http.get<Actor[]>(`${url}/actors`);
   }
 
   getCompanies():Observable<Company[]>{
     return this.http.get<Company[]>(`${url}/companies`);
+  }
+
+  updateCompaniesById(company: Company):Observable<Movie>{
+    return this.http.put<any>(`${url}/companies/${company.id}`, company);
   }
 
 }

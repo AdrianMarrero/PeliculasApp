@@ -46,13 +46,13 @@
       </div>
       <div class="col-12">
         <h5>Estudio</h5>
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name"></p-dropdown>
-        <p class="text-muted mt-2">{{selectedCompany.name}}</p>
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name"></p-dropdown>
+          <p class="text-muted mt-2" *ngIf="selectedCompany.name != ''">{{selectedCompany.name}}</p>
         <hr/>
       </div>
       <div class="col-12 pb-6">
         <h5>Géneros</h5>
-        <input type="text" pInputText [(ngModel)]="movie.genre">
+        <input type="text" pInputText [(ngModel)]="newGenre" placeholder="Género">
         <div class="mt-2">
           <p-tag *ngFor="let genre of movie.genre" [value]="genre" class=""></p-tag>
         </div>

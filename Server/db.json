@@ -304,9 +304,7 @@
       "employees": 611,
       "rating": 8.19,
       "movies": [
-        2,
-        3,
-        4
+        2
       ]
     },
     {
@@ -341,7 +339,9 @@
       "createYear": 1999,
       "employees": 921,
       "rating": 1.77,
-      "movies": []
+      "movies": [
+        4
+      ]
     }
   ]
 }
