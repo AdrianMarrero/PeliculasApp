@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success editFloatBtn" (click)="edit()"></button>
+    <button pButton pRipple type="button" [disabled]="movie.title == ''" icon="pi pi-pencil" class="p-button-rounded p-button-success editFloatBtn" (click)="edit()"></button>
     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger trashFloatBtn" (click)="delete()"></button>
     <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 </div>

@@ -5,6 +5,7 @@ import { ConfirmationService } from 'primeng/api';
 import { Movie } from 'src/app/interfaces/movie-response';
 import { PeliculasService } from 'src/app/services/peliculas.service';
 import { Actor, Company } from '../../../interfaces/movie-response';
+import { ArrHelpers } from '../../../helpers/arr-helpers';
 
 @Component({
   selector: 'app-edit-movie',
@@ -26,6 +27,7 @@ export class EditMovieComponent implements OnInit {
 
   title!: string;
   newGenre: string = '';
+  disabledEdit: boolean = true;
 
   constructor(private peliculasService: PeliculasService,
     private route: ActivatedRoute,
@@ -49,7 +51,7 @@ export class EditMovieComponent implements OnInit {
       this.movie = movie;
       this.actors = actors;
       this.companies = companies;
-      this.fillForm(this.movie);
+      this.title = movie.title;
       this.concatActorName();
       this.fillSelectedActor(this.movie.actors);
       this.fillSelectedCompanies(this.movie.id, companies);
@@ -63,10 +65,14 @@ export class EditMovieComponent implements OnInit {
         this.loading = false;
       });
 
-
-
   }
 
+  /**
+   *
+   * Display name actor firstname + lastname
+   * new field in object
+   *
+   */
   concatActorName() {
     this.actors.map(option => {
       const newPropsObj = {
@@ -76,6 +82,11 @@ export class EditMovieComponent implements OnInit {
     });
   }
 
+  /**
+   *
+   * Set selected actors
+   *
+   */
   fillSelectedActor(actors: number[]) {
     for (const iterator of this.actors) {
       for (const iterator2 of actors) {
@@ -87,6 +98,12 @@ export class EditMovieComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * Set company dropdown
+   * and inlcude "No company" case
+   *
+   */
   fillSelectedCompanies(movieId: number, companies: Company[]) {
     const companyFake = {
       "id": -1,
@@ -109,28 +126,41 @@ export class EditMovieComponent implements OnInit {
     this.selectedCompanyOld = this.selectedCompany;
   }
 
-  fillForm(movie: Movie) {
-    this.title = movie.title;
-  }
 
+  /**
+   *
+   *
+   * Edit movie
+   * 1) Update genre
+   * 2) Update company (service company)
+   * 3) Update movie
+   * 4) Redirect home
+   *
+   */
   edit() {
-
+    this.loading = true;
     this.movie.actors = this.selectedActors.map(actor => actor.id);
     if (this.newGenre !== '') {
       this.movie.genre.push(this.newGenre);
     }
+    this.updateCompany();
 
-    this.updateCompany().then( () => {
-      this.peliculasService.updateMoviesById(this.movie)
-        .subscribe( movie => {
-          console.log(movie);
-        })
-    });
+    this.peliculasService.updateMoviesById(this.movie)
+      .subscribe( movie => {
+        this.loading = false;
+        this.router.navigate(["/home"]);
+      })
 
-
-    console.log(this.movie);
   }
 
+  /**
+   *
+   * Delete movie
+   * 1) Confirm
+   * 2) Delete service
+   * 3) Navigate home
+   *
+   */
   delete() {
     this.confirmationService.confirm({
       message: '¿Estás seguro que quiere eliminar ' + `${this.movie.title}` + '?',
@@ -143,32 +173,27 @@ export class EditMovieComponent implements OnInit {
     });
   }
 
+   /**
+   *
+   * Update cpmany
+   * 1) Delete company old
+   * 2) Insert new company
+   *
+   */
   updateCompany() {
-    console.log(this.selectedCompany);
-    let promise = new Promise<void>((resolve, reject) => {
-      this.removeItemFromArr(this.selectedCompanyOld.movies, this.movie.id);
-      this.selectedCompany.movies.push(this.movie.id);
 
-      this.peliculasService.updateCompaniesById(this.selectedCompanyOld).toPromise().then(() => {
-        this.peliculasService.updateCompaniesById(this.selectedCompany).toPromise().then(() => {
-        }).catch(err => {
-          console.log(err + 'update company');
-          reject();
-        });
+    ArrHelpers.removeItemFromArr(this.selectedCompanyOld.movies, this.movie.id);
+    this.selectedCompany.movies.push(this.movie.id)
 
-      }).catch(err => {
-        console.log(err + 'delete company');
-        reject();
-      });
-      resolve();
-    });
-
-    return promise;
+    this.peliculasService.updateCompaniesById(this.selectedCompanyOld)
+    .subscribe(resp => {
+      this.peliculasService.updateCompaniesById(this.selectedCompany)
+      .subscribe(resp => {
+        console.log('update');
+      })
+    })
 
   }
 
-  removeItemFromArr(arr: any, item: number) {
-    var i = arr.indexOf(item);
-    i !== -1 && arr.splice(i, 1);
-  };
+
 }

@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, pipe, EMPTY } from 'rxjs';
+import { Observable, pipe, EMPTY, of } from 'rxjs';
 import { MovieRespose, Movie, Actor, Company } from '../interfaces/movie-response';
 
-const url = `http://localhost:4000`;
+const url = `http://localhost:3000`;
 
 @Injectable({
   providedIn: 'root'
@@ -36,11 +36,23 @@ export class PeliculasService {
     return this.http.get<Company[]>(`${url}/companies`);
   }
 
-  updateCompaniesById(company: Company):Observable<Movie>{
+  postCompanies(companiesAll: Company[]):Observable<Company[]>{
+
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-type': 'application-json'})
+    };
+    const companies: never[] = [];
+
+    return this.http.post<Company[]>(`${url}/companies/`, companies, httpOptions);
+
+  }
+
+  updateCompaniesById(company: Company):Observable<Company>{
     if(company.id !== -1){
-      return this.http.put<any>(`${url}/companies/${company.id}`, company);
+      return this.http.put<Company>(`${url}/companies/${company.id}`, company);
     }
     return EMPTY;
   }
 
 }
+
