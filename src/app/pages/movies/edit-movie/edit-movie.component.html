@@ -6,7 +6,7 @@
     <div *ngIf="movie">
       <div class="row" >
         <div class="col-12 text-center">
-          <img src="{{movie.poster}}">
+          <img [src]="movie.poster | poster">
         </div>
       </div>
       <div class="row">

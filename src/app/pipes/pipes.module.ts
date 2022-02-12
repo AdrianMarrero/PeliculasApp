@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from './time-format.pipe';
+import { PosterPipe } from './poster.pipe';
 
 
 
 @NgModule({
   declarations: [
-    TimeFormatPipe
+    TimeFormatPipe,
+    PosterPipe
   ],
   exports: [
-    TimeFormatPipe
+    TimeFormatPipe,
+    PosterPipe
   ],
   imports: [
     CommonModule

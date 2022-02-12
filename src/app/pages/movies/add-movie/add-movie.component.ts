@@ -126,14 +126,10 @@ export class AddMovieComponent implements OnInit {
 
     this.peliculasService.postMovie(this.newMovie)
       .subscribe( resp => {
-
-        if(this.updateActors(form.selectedActors)){
-          this.loading = false;
-          this.myForm.reset();
-          this.messageService.add({severity:'success', summary: 'Insert', detail: `${resp.title}`, sticky: true});
-          this.router.navigate(['/home']);
-        }
-
+        this.updateActors(form.selectedActors);
+        this.updateCompany(form.selectedCompany);
+        this.loading = false;
+        this.router.navigate(['/home']);
       },
       err => {
           this.errorService = err.message;
@@ -152,6 +148,8 @@ export class AddMovieComponent implements OnInit {
 
       },
       err => {
+        this.errorService = err.message;
+        this.loading = false;
         return false;
       })
       SleepHelper.sleep(1000);
@@ -159,6 +157,18 @@ export class AddMovieComponent implements OnInit {
     return true;
   }
 
+  updateCompany(selectedCompany: Company){
+    selectedCompany.movies.push(this.newMovie.id);
+    this.peliculasService.updateCompaniesById(selectedCompany)
+      .subscribe(resp => {
+        return true;
+      },
+      err => {
+        this.errorService = err.message;
+        this.loading = false;
+        return false;
+      })
 
+  }
 
 }
