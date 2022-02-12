@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, pipe, EMPTY, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, delay, map, timeout } from 'rxjs/operators';
 import { MovieRespose, Movie, Actor, Company } from '../interfaces/movie-response';
 
-const url = `http://localhost:3000`;
+const url = `http://localhost:4000`;
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +22,9 @@ export class PeliculasService {
   }
 
   getMovieLast():Observable<any>{
-    return this.http.get<any>(`${url}/movies?_page=1`)
+    return this.http.get<any>(`${url}/movies`)
     .pipe(
-      map(resp => resp.length,
+      map(resp => resp.map( (movie: { id: any; }) => movie.id ),
       catchError(err => of(false))
     ));
   }
@@ -43,6 +43,10 @@ export class PeliculasService {
 
   getActors():Observable<Actor[]>{
     return this.http.get<Actor[]>(`${url}/actors`);
+  }
+
+  putActor(actor: Actor):Observable<Actor>{
+    return this.http.put<Actor>(`${url}/actors/${actor.id}`, actor);
   }
 
   getCompanies():Observable<Company[]>{

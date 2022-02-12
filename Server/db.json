@@ -1,23 +1,6 @@
 {
   "movies": [
     {
-      "id": 1,
-      "title": "as,ms,.mf",
-      "poster": "http://dummyimage.com/400x600.png/cc0000/ffffff",
-      "genre": [
-        "Comedy",
-        "Musical",
-        "Romance",
-        "Otros"
-      ],
-      "year": 2006,
-      "duration": 161,
-      "imdbRating": 8.27,
-      "actors": [
-        4
-      ]
-    },
-    {
       "id": 2,
       "title": "Mooring, The",
       "poster": "http://dummyimage.com/400x600.png/dddddd/000000",
@@ -31,21 +14,6 @@
       "actors": [
         5,
         6
-      ]
-    },
-    {
-      "id": 3,
-      "title": "Black Rain (Kuroi ame)",
-      "poster": "http://dummyimage.com/400x600.png/5fa2dd/ffffff",
-      "genre": [
-        "Drama",
-        "War"
-      ],
-      "year": 2010,
-      "duration": 175,
-      "imdbRating": 6.25,
-      "actors": [
-        1
       ]
     },
     {
@@ -170,16 +138,18 @@
     },
     {
       "id": 11,
-      "title": "sdfsadf",
-      "poster": "sadfsafd",
+      "title": "Prueba",
+      "poster": "234234sadsdfsadf",
       "genre": [
-        "Musical"
+        "Musical",
+        "Drama"
       ],
-      "year": 2020,
-      "duration": 34,
-      "imdbRating": 1,
+      "year": 1992,
+      "duration": 344,
+      "imdbRating": 3,
       "actors": [
-        1
+        9,
+        7
       ]
     }
   ],
@@ -195,8 +165,25 @@
       "rating": 2.03,
       "movies": [
         3,
-        7
-      ]
+        7,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        26,
+        26,
+        27,
+        27,
+        28,
+        28,
+        29,
+        29,
+        30
+      ],
+      "nombre_completo": "Isaak McQuode"
     },
     {
       "id": 2,
@@ -207,7 +194,22 @@
       "birthdate": "19/04/1975",
       "img": "http://dummyimage.com/600x400.png/5fa2dd/000000",
       "rating": 2.43,
-      "movies": []
+      "movies": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        26,
+        26,
+        27,
+        27,
+        29,
+        29,
+        30
+      ],
+      "nombre_completo": "Rory Chanders"
     },
     {
       "id": 3,
@@ -221,8 +223,25 @@
       "movies": [
         6,
         7,
-        8
-      ]
+        8,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        26,
+        26,
+        27,
+        27,
+        28,
+        28,
+        29,
+        29,
+        30
+      ],
+      "nombre_completo": "Lew Meehan"
     },
     {
       "id": 4,
@@ -236,8 +255,18 @@
       "movies": [
         1,
         6,
-        8
-      ]
+        8,
+        14,
+        16,
+        17,
+        18,
+        19,
+        28,
+        28,
+        29,
+        29
+      ],
+      "nombre_completo": "Marci Noads"
     },
     {
       "id": 5,
@@ -253,8 +282,16 @@
         2,
         6,
         7,
-        8
-      ]
+        8,
+        14,
+        16,
+        17,
+        18,
+        19,
+        29,
+        29
+      ],
+      "nombre_completo": "Jordan Yeskov"
     },
     {
       "id": 6,
@@ -269,8 +306,14 @@
         1,
         2,
         5,
-        10
-      ]
+        10,
+        14,
+        16,
+        18,
+        19,
+        29
+      ],
+      "nombre_completo": "Hale Bangs"
     },
     {
       "id": 7,
@@ -283,8 +326,14 @@
       "rating": 9.82,
       "movies": [
         5,
-        9
-      ]
+        9,
+        14,
+        16,
+        18,
+        19,
+        29
+      ],
+      "nombre_completo": "Quint Critcher"
     },
     {
       "id": 8,
@@ -298,8 +347,14 @@
       "movies": [
         4,
         5,
-        9
-      ]
+        9,
+        14,
+        16,
+        18,
+        19,
+        29
+      ],
+      "nombre_completo": "Angela Kaming"
     },
     {
       "id": 9,
@@ -313,8 +368,14 @@
       "movies": [
         4,
         9,
-        10
-      ]
+        10,
+        14,
+        16,
+        18,
+        19,
+        29
+      ],
+      "nombre_completo": "Orson Cud"
     },
     {
       "id": 10,
@@ -326,8 +387,14 @@
       "img": "https://dummyimage.com/600x400.png/1f12ff/ffffff",
       "rating": 5.39,
       "movies": [
-        4
-      ]
+        4,
+        14,
+        16,
+        18,
+        19,
+        29
+      ],
+      "nombre_completo": "Murielle Carvilla"
     }
   ],
   "companies": [

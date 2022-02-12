@@ -5,7 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { combineLatest } from 'rxjs';
 import { Actor, Company, IGender, Movie } from 'src/app/interfaces/movie-response';
+import { ArrHelpers } from '../../../helpers/arr-helpers';
+
 import { PeliculasService } from 'src/app/services/peliculas.service';
+import { MessageService } from 'primeng/api';
+import { SleepHelper } from '../../../helpers/sleep-helper';
+
 
 @Component({
   selector: 'app-add-movie',
@@ -33,6 +38,7 @@ export class AddMovieComponent implements OnInit {
     imdbRating: 0,
     actors: []
   }
+
   maxDateValue: any;
 
   myForm!: FormGroup;
@@ -42,7 +48,8 @@ export class AddMovieComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService) {
 
     this.genres = [
       {name: 'Comedy', code: 'Comedy'},
@@ -69,11 +76,11 @@ export class AddMovieComponent implements OnInit {
       this.peliculasService.getCompanies(),
       this.peliculasService.getMovieLast()
 
-    ]).subscribe(([actors, companies, movie]) => {
+    ]).subscribe(([actors, companies, movieIds]) => {
       this.actors = actors;
       this.companies = companies;
-      this.newMovie.id = movie + 1;
-      this.concatActorName();
+      this.newMovie.id = Math.max.apply(Math, movieIds) + 1;
+      ArrHelpers.concatActorName(this.actors);
       this.loading = false;
       this.errorService = '';
     },
@@ -88,20 +95,11 @@ export class AddMovieComponent implements OnInit {
       selectedGenres: ['', [Validators.required, Validators.min(1)]],
       selectedActors: ['', [Validators.required, Validators.min(1)]],
       selectedCompany: ['', [Validators.required, Validators.min(1)]],
-      selectedYear: ['', [Validators.required, Validators.min(1895)]],
+      selectedYear: ['', [Validators.required, Validators.min(1895),  Validators.max(2022)]],
       duration: [, [Validators.required, Validators.min(1)] ],
       rate: [0, [Validators.required, Validators.min(0), Validators.max(10)] ],
     })
 
-  }
-
-  concatActorName() {
-    this.actors.map(option => {
-      const newPropsObj = {
-        nombre_completo: option.first_name + ' ' + option.last_name
-      };
-      return Object.assign(option, newPropsObj);
-    });
   }
 
   validForm(field: string){
@@ -113,6 +111,7 @@ export class AddMovieComponent implements OnInit {
       this.myForm.markAllAsTouched();
       return;
     }
+    this.loading = true;
     let form = {...this.myForm.value};
 
     this.newMovie.title = form.title;
@@ -125,14 +124,41 @@ export class AddMovieComponent implements OnInit {
 
 
 
-    console.log(this.newMovie);
-
     this.peliculasService.postMovie(this.newMovie)
       .subscribe( resp => {
-        console.log('insert')
-      });
 
-    this.myForm.reset();
+        if(this.updateActors(form.selectedActors)){
+          this.loading = false;
+          this.myForm.reset();
+          this.messageService.add({severity:'success', summary: 'Insert', detail: `${resp.title}`, sticky: true});
+          this.router.navigate(['/home']);
+        }
+
+      },
+      err => {
+          this.errorService = err.message;
+          this.loading = false;
+          this.myForm.reset();
+          this.messageService.add({severity:'error', summary: 'Error', detail: `${this.errorService}`, sticky: true});
+      })
+
   }
+
+  updateActors(selectedActors: Actor[]){
+
+    for (let index = 0; index < selectedActors.length; index++) {
+      const element = selectedActors[index];
+      this.peliculasService.putActor(element).subscribe(resp => {
+
+      },
+      err => {
+        return false;
+      })
+      SleepHelper.sleep(1000);
+    }
+    return true;
+  }
+
+
 
 }

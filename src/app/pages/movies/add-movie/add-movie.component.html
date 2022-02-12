@@ -1,9 +1,8 @@
 <div class="container-fluid">
 
   <app-loading *ngIf="loading"></app-loading>
-  <h4 class="text-danger">{{errorService}}</h4>
   <form [formGroup]="myForm" autocomplete="off" (ngSubmit)="save()">
-    <div class="mb-3">
+    <div class="mb-3 mt-3" *ngIf="!loading">
       <label class="form-label">Título</label>
       <input type="text" class="form-control" pInputText formControlName="title">
       <span class="form-text text-danger" *ngIf="validForm('title')">Min 3 carácteres</span>
@@ -50,5 +49,5 @@
     </div>
 
   </form>
-
+  <p-toast></p-toast>
 </div>

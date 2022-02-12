@@ -19,9 +19,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ToastModule } from 'primeng/toast';
+
 
 import { RatingModule } from 'ng-starrating';
 
@@ -53,11 +55,13 @@ import { RatingModule } from 'ng-starrating';
     ButtonModule,
     ConfirmDialogModule,
     CalendarModule,
+    ToastModule,
     InputNumberModule,
     PipesModule
   ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    MessageService
   ],
 })
 export class PagesModule { }
