@@ -1,1 +1,46 @@
-<p>add-movie works!</p>
+<div class="container-fluid">
+
+  <app-loading *ngIf="loading"></app-loading>
+  <h4 class="text-danger">{{errorService}}</h4>
+  <form [formGroup]="myForm">
+    <div class="mb-3">
+      <label class="form-label">Título</label>
+      <input type="text" class="form-control" pInputText formControlName="title">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Póster (url)</label>
+      <input type="text" class="form-control" pInputText formControlName="poster">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Géneros</label>
+      <p-multiSelect [options]="genres" optionLabel="name" formControlName="selectedGenres"></p-multiSelect>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Actores</label>
+      <p-multiSelect [options]="actors" optionLabel="nombre_completo" formControlName="selectedActors"></p-multiSelect>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Estudio</label>
+      <p-dropdown [options]="companies" optionLabel="name" formControlName="selectedCompany"></p-dropdown>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Año</label>
+      <p-calendar view="year" dateFormat="yy" inputId="yearpicker" formControlName="selectedYear"></p-calendar>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Duración</label>
+      <p-inputNumber [showButtons]="true" mode=""  formControlName="duration"></p-inputNumber>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Puntuación</label>
+      <p-inputNumber [showButtons]="true" mode="" formControlName="rate"></p-inputNumber>
+      <hr>
+    </div>
+
+    <div class="mt-5">
+      <p-button type="submit" label="Submit" icon="pi pi-check" iconPos="right"></p-button>
+    </div>
+
+  </form>
+
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PeliculasService } from '../../../services/peliculas.service';
 import { Movie, MovieRespose } from '../../../interfaces/movie-response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -14,7 +15,8 @@ export class ListComponent implements OnInit {
   errorService: string = '';
 
 
-  constructor(private peliculasService: PeliculasService) { }
+  constructor(private peliculasService: PeliculasService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -35,4 +37,7 @@ export class ListComponent implements OnInit {
 
   }
 
+  goAddNewMovie(){
+    this.router.navigate(['/add']);
+  }
 }

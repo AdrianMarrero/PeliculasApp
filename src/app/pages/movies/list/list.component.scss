@@ -6,3 +6,14 @@
   border-radius: 1rem;
 }
 
+@mixin btnWithHeight {
+  width: 3.357rem;
+  height: 3.357rem!important;
+}
+
+.addFloatBtn{
+  @include btnWithHeight();
+  position: fixed;
+  bottom: 20px;
+  right: 90px;
+}

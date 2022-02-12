@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ListComponent } from './movies/list/list.component';
@@ -20,6 +20,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { RatingModule } from 'ng-starrating';
 
@@ -39,6 +41,7 @@ import { RatingModule } from 'ng-starrating';
     CommonModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     ComponentsModule,
     CardModule,
     ProgressSpinnerModule,
@@ -49,6 +52,8 @@ import { RatingModule } from 'ng-starrating';
     RatingModule,
     ButtonModule,
     ConfirmDialogModule,
+    CalendarModule,
+    InputNumberModule,
     PipesModule
   ],
   providers: [

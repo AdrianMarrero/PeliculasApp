@@ -42,3 +42,8 @@ export interface Movie {
   imdbRating: number;
   actors:     number[];
 }
+
+export interface IGender {
+  name: string;
+  code: string;
+}

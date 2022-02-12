@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
+import { combineLatest } from 'rxjs';
 import { Movie } from 'src/app/interfaces/movie-response';
 import { PeliculasService } from 'src/app/services/peliculas.service';
-import { Actor, Company } from '../../../interfaces/movie-response';
 import { ArrHelpers } from '../../../helpers/arr-helpers';
+import { Actor, Company } from '../../../interfaces/movie-response';
 
 @Component({
   selector: 'app-edit-movie',
@@ -27,7 +27,6 @@ export class EditMovieComponent implements OnInit {
 
   title!: string;
   newGenre: string = '';
-  disabledEdit: boolean = true;
 
   constructor(private peliculasService: PeliculasService,
     private route: ActivatedRoute,
@@ -60,10 +59,10 @@ export class EditMovieComponent implements OnInit {
       this.errorService = '';
 
     },
-      err => {
+    err => {
         this.errorService = err.message;
         this.loading = false;
-      });
+    });
 
   }
 
@@ -146,7 +145,7 @@ export class EditMovieComponent implements OnInit {
     this.updateCompany();
 
     this.peliculasService.updateMoviesById(this.movie)
-      .subscribe( movie => {
+      .subscribe(movie => {
         this.loading = false;
         this.router.navigate(["/home"]);
       })
@@ -173,25 +172,25 @@ export class EditMovieComponent implements OnInit {
     });
   }
 
-   /**
-   *
-   * Update cpmany
-   * 1) Delete company old
-   * 2) Insert new company
-   *
-   */
+  /**
+  *
+  * Update cpmany
+  * 1) Delete company old
+  * 2) Insert new company
+  *
+  */
   updateCompany() {
 
     ArrHelpers.removeItemFromArr(this.selectedCompanyOld.movies, this.movie.id);
     this.selectedCompany.movies.push(this.movie.id)
 
     this.peliculasService.updateCompaniesById(this.selectedCompanyOld)
-    .subscribe(resp => {
-      this.peliculasService.updateCompaniesById(this.selectedCompany)
       .subscribe(resp => {
-        console.log('update');
+        this.peliculasService.updateCompaniesById(this.selectedCompany)
+          .subscribe(resp => {
+            console.log('update');
+          })
       })
-    })
 
   }
 
