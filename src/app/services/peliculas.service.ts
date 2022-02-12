@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, pipe, EMPTY, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { MovieRespose, Movie, Actor, Company } from '../interfaces/movie-response';
 
 const url = `http://localhost:3000`;
@@ -18,6 +19,18 @@ export class PeliculasService {
 
   getMoviesById(id: number):Observable<Movie>{
     return this.http.get<Movie>(`${url}/movies/${id}`);
+  }
+
+  getMovieLast():Observable<any>{
+    return this.http.get<any>(`${url}/movies?_page=1`)
+    .pipe(
+      map(resp => resp.length,
+      catchError(err => of(false))
+    ));
+  }
+
+  postMovie(movie: Movie):Observable<Movie>{
+    return this.http.post<Movie>(`${url}/movies/`, movie);
   }
 
   deleteMoviesById(id: number):Observable<any>{
@@ -55,4 +68,5 @@ export class PeliculasService {
   }
 
 }
+
 

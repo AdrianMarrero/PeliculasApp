@@ -1,9 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { combineLatest } from 'rxjs';
-import { Actor, Company, IGender } from 'src/app/interfaces/movie-response';
+import { Actor, Company, IGender, Movie } from 'src/app/interfaces/movie-response';
 import { PeliculasService } from 'src/app/services/peliculas.service';
 
 @Component({
@@ -22,8 +23,20 @@ export class AddMovieComponent implements OnInit {
   selectedActors: Actor[] = [];
   companies: Company[] = [];
   selectedCompany!: Company;
+  newMovie: Movie = {
+    id: 0 ,
+    title: '',
+    poster: null,
+    genre: [],
+    year: 0,
+    duration: 0,
+    imdbRating: 0,
+    actors: []
+  }
+  maxDateValue: any;
 
   myForm!: FormGroup;
+
 
   constructor(private peliculasService: PeliculasService,
     private route: ActivatedRoute,
@@ -31,13 +44,20 @@ export class AddMovieComponent implements OnInit {
     private router: Router,
     private confirmationService: ConfirmationService) {
 
-
     this.genres = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
+      {name: 'Comedy', code: 'Comedy'},
+      {name: 'Musical', code: 'Musical'},
+      {name: 'Romance', code: 'Romance'},
+      {name: 'Horror', code: 'Horror'},
+      {name: 'Thriller', code: 'Thriller'},
+      {name: 'Drama', code: 'Drama'},
+      {name: 'War', code: 'War'},
+      {name: 'Adventure', code: 'Adventure'},
+      {name: 'Crime', code: 'Crime'},
+      {name: 'Action', code: 'Action'},
+      {name: 'Animation', code: 'Animation'},
+      {name: 'Sci-Fi', code: 'Sci-Fi'},
+      {name: 'Otros', code: 'Otros'}
     ];
 
   }
@@ -46,10 +66,13 @@ export class AddMovieComponent implements OnInit {
 
     combineLatest([
       this.peliculasService.getActors(),
-      this.peliculasService.getCompanies()
-    ]).subscribe(([actors, companies]) => {
+      this.peliculasService.getCompanies(),
+      this.peliculasService.getMovieLast()
+
+    ]).subscribe(([actors, companies, movie]) => {
       this.actors = actors;
       this.companies = companies;
+      this.newMovie.id = movie + 1;
       this.concatActorName();
       this.loading = false;
       this.errorService = '';
@@ -60,14 +83,14 @@ export class AddMovieComponent implements OnInit {
     });
 
     this.myForm = this.fb.group({
-      title: new FormControl(''),
-      poster: new FormControl(''),
-      selectedGenres: new FormControl(''),
-      selectedActors: new FormControl(''),
-      selectedCompany: new FormControl(''),
-      selectedYear: new FormControl(''),
-      duration: new FormControl(''),
-      rate: new FormControl('')
+      title: ['', [Validators.required, Validators.minLength(3)] ],
+      poster: ['', [Validators.required, Validators.minLength(3)]],
+      selectedGenres: ['', [Validators.required, Validators.min(1)]],
+      selectedActors: ['', [Validators.required, Validators.min(1)]],
+      selectedCompany: ['', [Validators.required, Validators.min(1)]],
+      selectedYear: ['', [Validators.required, Validators.min(1895)]],
+      duration: [, [Validators.required, Validators.min(1)] ],
+      rate: [0, [Validators.required, Validators.min(0), Validators.max(10)] ],
     })
 
   }
@@ -80,4 +103,36 @@ export class AddMovieComponent implements OnInit {
       return Object.assign(option, newPropsObj);
     });
   }
+
+  validForm(field: string){
+    return this.myForm.controls[field].errors && this.myForm.controls[field].touched;
+  }
+
+  save(){
+    if(this.myForm.invalid){
+      this.myForm.markAllAsTouched();
+      return;
+    }
+    let form = {...this.myForm.value};
+
+    this.newMovie.title = form.title;
+    this.newMovie.poster = form.poster;
+    this.newMovie.genre = form.selectedGenres.map( (genre: { name: any; }) => genre.name )
+    this.newMovie.year = form.selectedYear.getFullYear();
+    this.newMovie.duration = form.duration;
+    this.newMovie.imdbRating = form.rate;
+    this.newMovie.actors = form.selectedActors.map( (actor: { id: any; }) => actor.id );
+
+
+
+    console.log(this.newMovie);
+
+    this.peliculasService.postMovie(this.newMovie)
+      .subscribe( resp => {
+        console.log('insert')
+      });
+
+    this.myForm.reset();
+  }
+
 }
