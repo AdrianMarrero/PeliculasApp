@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { combineLatest } from 'rxjs';
+import { SleepHelper } from 'src/app/helpers/sleep-helper';
 import { Movie } from 'src/app/interfaces/movie-response';
 import { PeliculasService } from 'src/app/services/peliculas.service';
 import { ArrHelpers } from '../../../helpers/arr-helpers';
@@ -31,7 +32,8 @@ export class EditMovieComponent implements OnInit {
   constructor(private peliculasService: PeliculasService,
     private route: ActivatedRoute,
     private router: Router,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService) {
 
     this.idMovie = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -61,6 +63,7 @@ export class EditMovieComponent implements OnInit {
     },
     err => {
         this.errorService = err.message;
+        this.messageService.add({severity:'error', summary: 'Error', detail: `${this.errorService}`, sticky: true});
         this.loading = false;
     });
 
@@ -111,7 +114,8 @@ export class EditMovieComponent implements OnInit {
       "createYear": 2022,
       "employees": 0,
       "rating": 0,
-      "movies": []
+      "movies": [],
+      "disabled": true
     }
     companies.push(companyFake);
     for (const key in companies) {
@@ -148,7 +152,12 @@ export class EditMovieComponent implements OnInit {
       .subscribe(movie => {
         this.loading = false;
         this.router.navigate(["/home"]);
-      })
+      },
+      err => {
+          this.errorService = err.message;
+          this.messageService.add({severity:'error', summary: 'Error', detail: `${this.errorService}`, sticky: true});
+          this.loading = false;
+      });
 
   }
 
@@ -167,6 +176,11 @@ export class EditMovieComponent implements OnInit {
         this.peliculasService.deleteMoviesById(this.movie.id)
           .subscribe(() => {
             this.router.navigate(['/home']);
+          },
+          err => {
+              this.errorService = err.message;
+              this.messageService.add({severity:'error', summary: 'Error', detail: `${this.errorService}`, sticky: true});
+              this.loading = false;
           });
       }
     });
@@ -186,11 +200,22 @@ export class EditMovieComponent implements OnInit {
 
     this.peliculasService.updateCompaniesById(this.selectedCompanyOld)
       .subscribe(resp => {
+        SleepHelper.sleep(1000);
         this.peliculasService.updateCompaniesById(this.selectedCompany)
           .subscribe(resp => {
             console.log('update');
-          })
-      })
+          },
+          err => {
+              this.errorService = err.message;
+              this.messageService.add({severity:'error', summary: 'Error', detail: `${this.errorService}`, sticky: true});
+              this.loading = false;
+          });
+      },
+      err => {
+          this.errorService = err.message;
+          this.messageService.add({severity:'error', summary: 'Error', detail: `${this.errorService}`, sticky: true});
+          this.loading = false;
+      });
 
   }
 

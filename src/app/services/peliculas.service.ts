@@ -13,6 +13,26 @@ export class PeliculasService {
 
   constructor(private http: HttpClient) { }
 
+  genres = [
+    {name: 'Comedy', code: 'Comedy'},
+    {name: 'Musical', code: 'Musical'},
+    {name: 'Romance', code: 'Romance'},
+    {name: 'Horror', code: 'Horror'},
+    {name: 'Thriller', code: 'Thriller'},
+    {name: 'Drama', code: 'Drama'},
+    {name: 'War', code: 'War'},
+    {name: 'Adventure', code: 'Adventure'},
+    {name: 'Crime', code: 'Crime'},
+    {name: 'Action', code: 'Action'},
+    {name: 'Animation', code: 'Animation'},
+    {name: 'Sci-Fi', code: 'Sci-Fi'},
+    {name: 'Otros', code: 'Otros'}
+  ];
+
+  getGeners(){
+    return this.genres;
+  }
+
   getMovies():Observable<Movie[]>{
     return this.http.get<Movie[]>(`${url}/movies`);
   }

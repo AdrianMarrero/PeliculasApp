@@ -2,52 +2,53 @@
 
   <app-loading *ngIf="loading"></app-loading>
   <form [formGroup]="myForm" autocomplete="off" (ngSubmit)="save()">
-    <div class="mb-3 mt-3" *ngIf="!loading">
-      <label class="form-label">Título</label>
-      <input type="text" class="form-control" pInputText formControlName="title">
-      <span class="form-text text-danger" *ngIf="validForm('title')">Min 3 carácteres</span>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Póster (url)</label>
-      <input type="text" class="form-control" pInputText formControlName="poster">
-      <span class="form-text text-danger" *ngIf="validForm('poster')">Min 3 carácteres</span>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Géneros</label>
-      <p-multiSelect [options]="genres" optionLabel="name" formControlName="selectedGenres"></p-multiSelect>
-      <span class="form-text text-danger" *ngIf="validForm('selectedGenres')">Al menos 1 género</span>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Actores</label>
-      <p-multiSelect [options]="actors" optionLabel="nombre_completo" formControlName="selectedActors"></p-multiSelect>
-      <span class="form-text text-danger" *ngIf="validForm('selectedActors')">Al menos 1 actor</span>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Estudio</label>
-      <p-dropdown [options]="companies" optionLabel="name" formControlName="selectedCompany"></p-dropdown>
-      <span class="form-text text-danger" *ngIf="validForm('selectedCompany')">Al menos 1 estudio</span>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Año</label>
-      <p-calendar view="year" dateFormat="yy" inputId="yearpicker" formControlName="selectedYear"></p-calendar>
-      <span class="form-text text-danger" *ngIf="validForm('selectedYear')">El 28 de diciembre de 1895 se realiza la primera proyección cinematográfica abierta al público.</span>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Duración</label>
-      <p-inputNumber [showButtons]="true" mode="decimal" formControlName="duration"></p-inputNumber>
-      <span class="form-text text-danger" *ngIf="validForm('duration')">Al menos 1 min</span>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Puntuación</label>
-      <p-inputNumber [showButtons]="true" formControlName="rate"></p-inputNumber>
-      <span class="form-text text-danger" *ngIf="validForm('rate')">Entre 0 y 10</span>
-      <hr>
-    </div>
+    <div *ngIf="!loading">
+      <div class="mb-3 mt-3">
+        <label class="form-label">Título</label>
+        <input type="text" class="form-control" pInputText formControlName="title">
+        <span class="form-text text-danger" *ngIf="validForm('title')">Min 3 carácteres</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Póster (url)</label>
+        <input type="text" class="form-control" pInputText formControlName="poster">
+        <span class="form-text text-danger" *ngIf="validForm('poster')">Min 3 carácteres</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Géneros</label>
+        <p-multiSelect [options]="genres" optionLabel="name" display="chip" formControlName="selectedGenres"></p-multiSelect>
+        <span class="form-text text-danger" *ngIf="validForm('selectedGenres')">Al menos 1 género</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Actores</label>
+        <p-multiSelect [options]="actors" optionLabel="nombre_completo" display="chip" formControlName="selectedActors"></p-multiSelect>
+        <span class="form-text text-danger" *ngIf="validForm('selectedActors')">Al menos 1 actor</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Estudio</label>
+        <p-dropdown [options]="companies" optionLabel="name" formControlName="selectedCompany"></p-dropdown>
+        <span class="form-text text-danger" *ngIf="validForm('selectedCompany')">Al menos 1 estudio</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Año</label>
+        <p-calendar view="year" dateFormat="yy" inputId="yearpicker" formControlName="selectedYear"></p-calendar>
+        <span class="form-text text-danger" *ngIf="validForm('selectedYear')">El 28 de diciembre de 1895 se realiza la primera proyección cinematográfica abierta al público.</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Duración (min)</label>
+        <p-inputNumber [showButtons]="true" mode="decimal" formControlName="duration"></p-inputNumber>
+        <span class="form-text text-danger" *ngIf="validForm('duration')">Al menos 1 min</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Puntuación</label>
+        <p-inputNumber [showButtons]="true" formControlName="rate"></p-inputNumber>
+        <span class="form-text text-danger" *ngIf="validForm('rate')">Entre 0 y 10</span>
+        <hr>
+      </div>
 
-    <div class="mt-5">
-      <p-button type="submit" label="Submit" icon="pi pi-check" iconPos="right"></p-button>
+      <div class="mt-5">
+        <p-button type="submit" label="Submit" icon="pi pi-check" iconPos="right"></p-button>
+      </div>
     </div>
-
   </form>
   <p-toast></p-toast>
 </div>

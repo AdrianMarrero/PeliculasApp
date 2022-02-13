@@ -1,8 +1,10 @@
 
   <div class="card">
     <h4 class="card-title px-6 pt-4">{{movie.title}}</h4>
-    <img [src]="movie.poster | poster" class="card-img-top px-6">
+    <div class="container-img">
+      <img [src]="movie.poster | poster" class="card-img-top px-6">
+    </div>
     <div class="px-6 py-4">
-      <p-tag *ngFor="let genre of movie.genre" [value]="genre" class=""></p-tag>
+      <p-tag *ngFor="let genre of movie.genre" [value]="genre"></p-tag>
     </div>
   </div>

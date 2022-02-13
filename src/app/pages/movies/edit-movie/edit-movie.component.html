@@ -2,8 +2,7 @@
 <div class="container-fluid">
 
     <app-loading *ngIf="loading"></app-loading>
-    <h4 class="text-danger">{{errorService}}</h4>
-    <div *ngIf="movie">
+    <div *ngIf="movie && !loading">
       <div class="row" >
         <div class="col-12 text-center">
           <img [src]="movie.poster | poster">
@@ -38,7 +37,7 @@
       </div>
       <div class="col-12">
         <h5>Actores</h5>
-        <p-multiSelect [options]="actors" [(ngModel)]="selectedActors" optionLabel="nombre_completo"></p-multiSelect>
+        <p-multiSelect [options]="actors" [(ngModel)]="selectedActors" optionLabel="nombre_completo" display="chip"></p-multiSelect>
         <div class="mt-2" *ngFor="let actor of selectedActors">
           <p class="text-muted">{{actor.nombre_completo}}</p>
         </div>
@@ -54,7 +53,7 @@
         <h5>Géneros</h5>
         <input type="text" pInputText [(ngModel)]="newGenre" placeholder="Género">
         <div class="mt-2">
-          <p-tag *ngFor="let genre of movie.genre" [value]="genre" class=""></p-tag>
+          <p-tag *ngFor="let genre of movie.genre" [value]="genre" class="mr-2"></p-tag>
         </div>
       </div>
     </div>
@@ -62,4 +61,5 @@
     <button pButton pRipple type="button" [disabled]=" movie && movie.title == ''" icon="pi pi-pencil" class="p-button-rounded p-button-success editFloatBtn" (click)="edit()"></button>
     <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger trashFloatBtn" (click)="delete()"></button>
     <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-toast></p-toast>
 </div>

@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { combineLatest } from 'rxjs';
@@ -22,7 +22,7 @@ export class AddMovieComponent implements OnInit {
   loading: boolean = false;
   errorService: string = '';
 
-  genres: IGender[];
+  genres: IGender[] = [];
   selectedGenres: IGender[] = [];
   actors!: Actor[];
   selectedActors: Actor[] = [];
@@ -51,21 +51,6 @@ export class AddMovieComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService) {
 
-    this.genres = [
-      {name: 'Comedy', code: 'Comedy'},
-      {name: 'Musical', code: 'Musical'},
-      {name: 'Romance', code: 'Romance'},
-      {name: 'Horror', code: 'Horror'},
-      {name: 'Thriller', code: 'Thriller'},
-      {name: 'Drama', code: 'Drama'},
-      {name: 'War', code: 'War'},
-      {name: 'Adventure', code: 'Adventure'},
-      {name: 'Crime', code: 'Crime'},
-      {name: 'Action', code: 'Action'},
-      {name: 'Animation', code: 'Animation'},
-      {name: 'Sci-Fi', code: 'Sci-Fi'},
-      {name: 'Otros', code: 'Otros'}
-    ];
 
   }
 
@@ -79,6 +64,7 @@ export class AddMovieComponent implements OnInit {
     ]).subscribe(([actors, companies, movieIds]) => {
       this.actors = actors;
       this.companies = companies;
+      this.genres = this.peliculasService.getGeners();
       this.newMovie.id = Math.max.apply(Math, movieIds) + 1;
       ArrHelpers.concatActorName(this.actors);
       this.loading = false;
@@ -91,7 +77,7 @@ export class AddMovieComponent implements OnInit {
 
     this.myForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)] ],
-      poster: ['', [Validators.required, Validators.minLength(3)]],
+      poster: ['', []],
       selectedGenres: ['', [Validators.required, Validators.min(1)]],
       selectedActors: ['', [Validators.required, Validators.min(1)]],
       selectedCompany: ['', [Validators.required, Validators.min(1)]],
