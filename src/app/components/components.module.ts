@@ -6,6 +6,10 @@ import { CardMovieComponent } from './card-movie/card-movie.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PipesModule } from '../pipes/pipes.module';
 
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
@@ -22,7 +26,16 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     RouterModule,
     TagModule,
     ProgressSpinnerModule,
-    PipesModule
+    PipesModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      }
+    })
   ],
   exports:[
     NavbarComponent,

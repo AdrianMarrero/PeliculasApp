@@ -4,6 +4,9 @@ import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ListComponent } from './movies/list/list.component';
 import { EditMovieComponent } from './movies/edit-movie/edit-movie.component';
@@ -57,7 +60,16 @@ import { RatingModule } from 'ng-starrating';
     CalendarModule,
     ToastModule,
     InputNumberModule,
-    PipesModule
+    PipesModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      }
+    })
   ],
   providers: [
     ConfirmationService,

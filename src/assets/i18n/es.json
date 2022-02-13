@@ -1,0 +1,13 @@
+{
+  "navbar.peliculas" : "Películas",
+  "navbar.actores" : "Actores",
+  "navbar.estudios" : "Estudios",
+  "navbar.peliculasApp": "PeliculasApp",
+  "loading": "Cargando...",
+  "edit.puntuacion": "Puntuación:",
+  "edit.duración:": "Duración:",
+  "edit.titulo": "Título",
+  "edit.actores": "Actores",
+  "edit.estudio": "Estudio",
+  "edit.generos": "Géneros"
+}
