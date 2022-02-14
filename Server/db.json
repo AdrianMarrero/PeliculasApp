@@ -194,20 +194,6 @@
         2,
         3
       ]
-    },
-    {
-      "id": 12,
-      "title": "Nueva 3",
-      "poster": "",
-      "genre": [
-        "Comedy"
-      ],
-      "year": 2020,
-      "duration": 120,
-      "imdbRating": 3,
-      "actors": [
-        1
-      ]
     }
   ],
   "actors": [
@@ -267,7 +253,8 @@
         1,
         6,
         8
-      ]
+      ],
+      "nombre_completo": "Marci Noads"
     },
     {
       "id": 5,
@@ -284,7 +271,8 @@
         6,
         7,
         8
-      ]
+      ],
+      "nombre_completo": "Jordan Yeskov"
     },
     {
       "id": 6,
@@ -300,7 +288,8 @@
         2,
         5,
         10
-      ]
+      ],
+      "nombre_completo": "Hale Bangs"
     },
     {
       "id": 7,
@@ -314,7 +303,8 @@
       "movies": [
         5,
         9
-      ]
+      ],
+      "nombre_completo": "Quint Critcher"
     },
     {
       "id": 8,
@@ -329,7 +319,8 @@
         4,
         5,
         9
-      ]
+      ],
+      "nombre_completo": "Angela Kaming"
     },
     {
       "id": 9,
@@ -344,7 +335,8 @@
         4,
         9,
         10
-      ]
+      ],
+      "nombre_completo": "Orson Cud"
     },
     {
       "id": 10,
@@ -357,7 +349,8 @@
       "rating": 5.39,
       "movies": [
         4
-      ]
+      ],
+      "nombre_completo": "Murielle Carvilla"
     }
   ],
   "companies": [
@@ -369,8 +362,9 @@
       "employees": 81,
       "rating": 4.32,
       "movies": [
-        1,
         11,
+        1,
+        12,
         12
       ]
     },
@@ -409,7 +403,8 @@
       "movies": [
         8,
         9,
-        2
+        2,
+        12
       ]
     },
     {

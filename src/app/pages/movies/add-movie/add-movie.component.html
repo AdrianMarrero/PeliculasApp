@@ -4,49 +4,49 @@
   <form [formGroup]="myForm" autocomplete="off" (ngSubmit)="save()">
     <div *ngIf="!loading">
       <div class="mb-3 mt-3">
-        <label class="form-label">Título</label>
+        <label class="form-label">{{ 'add.titulo' | translate }}</label>
         <input type="text" class="form-control" pInputText formControlName="title">
-        <span class="form-text text-danger" *ngIf="validForm('title')">Min 3 carácteres</span>
+        <span class="form-text text-danger" *ngIf="validForm('title')">{{ 'add.min3caracteres' | translate }}</span>
       </div>
       <div class="mb-3">
-        <label class="form-label">Póster (url)</label>
+        <label class="form-label">{{ 'add.poster' | translate }}</label>
         <input type="text" class="form-control" pInputText formControlName="poster">
-        <span class="form-text text-danger" *ngIf="validForm('poster')">Min 3 carácteres</span>
+        <span class="form-text text-danger" *ngIf="validForm('poster')">{{ 'add.min3caracteres' | translate }}</span>
       </div>
       <div class="mb-3">
-        <label class="form-label">Géneros</label>
+        <label class="form-label">{{ 'add.generos' | translate }}</label>
         <p-multiSelect [options]="genres" optionLabel="name" display="chip" formControlName="selectedGenres"></p-multiSelect>
-        <span class="form-text text-danger" *ngIf="validForm('selectedGenres')">Al menos 1 género</span>
+        <span class="form-text text-danger" *ngIf="validForm('selectedGenres')">{{ 'add.min1genero' | translate}}</span>
       </div>
       <div class="mb-3">
-        <label class="form-label">Actores</label>
+        <label class="form-label">{{ 'add.actores' | translate }}</label>
         <p-multiSelect [options]="actors" optionLabel="nombre_completo" display="chip" formControlName="selectedActors"></p-multiSelect>
-        <span class="form-text text-danger" *ngIf="validForm('selectedActors')">Al menos 1 actor</span>
+        <span class="form-text text-danger" *ngIf="validForm('selectedActors')">{{ 'add.min1actor' | translate}}</span>
       </div>
       <div class="mb-3">
-        <label class="form-label">Estudio</label>
+        <label class="form-label">{{ 'add.estudio' | translate }}</label>
         <p-dropdown [options]="companies" optionLabel="name" formControlName="selectedCompany"></p-dropdown>
-        <span class="form-text text-danger" *ngIf="validForm('selectedCompany')">Al menos 1 estudio</span>
+        <span class="form-text text-danger" *ngIf="validForm('selectedCompany')">{{ 'add.min1estudio' | translate}}</span>
       </div>
       <div class="mb-3">
-        <label class="form-label">Año</label>
+        <label class="form-label">{{ 'add.annio' | translate }}</label>
         <p-calendar view="year" dateFormat="yy" inputId="yearpicker" formControlName="selectedYear"></p-calendar>
-        <span class="form-text text-danger" *ngIf="validForm('selectedYear')">El 28 de diciembre de 1895 se realiza la primera proyección cinematográfica abierta al público.</span>
+        <span class="form-text text-danger" *ngIf="validForm('selectedYear')">{{ 'add.validannio' | translate}}</span>
       </div>
       <div class="mb-3">
-        <label class="form-label">Duración (min)</label>
+        <label class="form-label">{{ 'add.duracion' | translate }}</label>
         <p-inputNumber [showButtons]="true" mode="decimal" formControlName="duration"></p-inputNumber>
-        <span class="form-text text-danger" *ngIf="validForm('duration')">Al menos 1 min</span>
+        <span class="form-text text-danger" *ngIf="validForm('duration')">{{ 'add.validduracion' | translate }}</span>
       </div>
       <div class="mb-3">
-        <label class="form-label">Puntuación</label>
+        <label class="form-label">{{ 'add.puntuacion' | translate }}</label>
         <p-inputNumber [showButtons]="true" formControlName="rate"></p-inputNumber>
-        <span class="form-text text-danger" *ngIf="validForm('rate')">Entre 0 y 10</span>
+        <span class="form-text text-danger" *ngIf="validForm('rate')">{{ 'add.validpuntuacion' | translate }}</span>
         <hr>
       </div>
 
       <div class="mt-5">
-        <p-button type="submit" label="Submit" icon="pi pi-check" iconPos="right"></p-button>
+        <p-button type="submit" label="{{'add.guardar' | translate}}" icon="pi pi-check" iconPos="right"></p-button>
       </div>
     </div>
   </form>

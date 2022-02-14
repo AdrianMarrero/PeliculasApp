@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable, pipe, EMPTY, of } from 'rxjs';
 import { catchError, delay, map, timeout } from 'rxjs/operators';
 import { MovieRespose, Movie, Actor, Company } from '../interfaces/movie-response';
+import { environment } from '../../environments/environment';
 
-const url = `http://localhost:4000`;
+const url = environment.api_url;
 
 @Injectable({
   providedIn: 'root'
@@ -71,17 +72,6 @@ export class PeliculasService {
 
   getCompanies():Observable<Company[]>{
     return this.http.get<Company[]>(`${url}/companies`);
-  }
-
-  postCompanies(companiesAll: Company[]):Observable<Company[]>{
-
-    const httpOptions = {
-      headers: new HttpHeaders({'Content-type': 'application-json'})
-    };
-    const companies: never[] = [];
-
-    return this.http.post<Company[]>(`${url}/companies/`, companies, httpOptions);
-
   }
 
   updateCompaniesById(company: Company):Observable<Company>{

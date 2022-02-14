@@ -88,10 +88,22 @@ export class AddMovieComponent implements OnInit {
 
   }
 
+  /**
+   *
+   * @param field
+   * @returns valid field
+   */
   validForm(field: string){
     return this.myForm.controls[field].errors && this.myForm.controls[field].touched;
   }
 
+  /**
+   *  1) Check valid form
+   *  2) Get data form
+   *  3) Add new movie
+   *  4) Update Actors and Company
+   *
+   */
   save(){
     if(this.myForm.invalid){
       this.myForm.markAllAsTouched();
@@ -126,6 +138,12 @@ export class AddMovieComponent implements OnInit {
 
   }
 
+  /**
+   * Update Actor
+   * Delay for json server has delay (1000)
+   * @param selectedActors
+   * @returns true
+   */
   updateActors(selectedActors: Actor[]){
 
     for (let index = 0; index < selectedActors.length; index++) {
@@ -143,6 +161,10 @@ export class AddMovieComponent implements OnInit {
     return true;
   }
 
+  /**
+   * Update Company
+   * @param selectedCompany
+   */
   updateCompany(selectedCompany: Company){
     selectedCompany.movies.push(this.newMovie.id);
     this.peliculasService.updateCompaniesById(selectedCompany)

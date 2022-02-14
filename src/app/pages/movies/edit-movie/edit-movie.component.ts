@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { combineLatest } from 'rxjs';
 import { SleepHelper } from 'src/app/helpers/sleep-helper';
@@ -33,7 +34,8 @@ export class EditMovieComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    public translate: TranslateService) {
 
     this.idMovie = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -171,7 +173,7 @@ export class EditMovieComponent implements OnInit {
    */
   delete() {
     this.confirmationService.confirm({
-      message: '¿Estás seguro que quiere eliminar ' + `${this.movie.title}` + '?',
+      message:  this.translate.instant('edit.eliminar')  + `${this.movie.title}` + '?',
       accept: () => {
         this.peliculasService.deleteMoviesById(this.movie.id)
           .subscribe(() => {
