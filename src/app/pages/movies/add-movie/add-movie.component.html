@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mt-8">
 
   <app-loading *ngIf="loading"></app-loading>
   <form [formGroup]="myForm" autocomplete="off" (ngSubmit)="save()">
@@ -45,7 +45,7 @@
         <hr>
       </div>
 
-      <div class="mt-5">
+      <div class="mt-5 pb-5">
         <p-button type="submit" label="{{'add.guardar' | translate}}" icon="pi pi-check" iconPos="right"></p-button>
       </div>
     </div>
