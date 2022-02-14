@@ -27,24 +27,29 @@ Se ha usado la siguiente estructura de ficheros:
 
 4. **app**: Contiene la aplicación.
     1. **components**:  Contiene los componentes reutilizables.
-        **card-movie**
-        **loading**
-        **navbar** 
+        - **card-movie**
+        - **loading**
+        - **navbar** 
+
     2. **helpers**: Funciones de apoyo, reutilizables.
-        **arr-helper**
-        **sleep-helper**
+        - **arr-helper**
+        - **sleep-helper**
+
     3. **Interfaces**: Tipado de datos.
-        **movie-response**
+        - **movie-response**
+
     4. **Pages**: Páginas de la aplicación
-        **movies**
-        **add-movie**
-        **edit-movie**
-        **list** 
+        - **movies**
+        - **add-movie**
+        - **edit-movie**
+        - **list**
+
     5. **pipes**: Pipes
-        **poster.pipe**
-        **time-format.pipe**
+        - **poster.pipe**
+        - **time-format.pipe**
+
     6. **services**: Servicios
-        **pelicula.service**   
+        - **pelicula.service**   
 
 ## Librerías externas
 
