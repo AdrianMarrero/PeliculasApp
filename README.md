@@ -40,9 +40,9 @@ Se ha usado la siguiente estructura de ficheros:
 
     4. **Pages**: Páginas de la aplicación
         - **movies**
-        - **add-movie**
-        - **edit-movie**
-        - **list**
+          - **add-movie**
+          - **edit-movie**
+          - **list**
 
     5. **pipes**: Pipes
         - **poster.pipe**
